@@ -19,13 +19,13 @@
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">Report</router-link>
+            <router-link to="/Information" class="nav-link">Information</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">Contact Us</router-link>
+            <router-link to="/contactus" class="nav-link">Contact Us</router-link>
           </li>
         </ul>
         <!-- <span class="navbar-text"></span> -->

@@ -1,7 +1,6 @@
 <template>
   <div class="container mt-4">
     <form @submit="submitReq" class="p-3 border rounded leftright">
-      <!-- 2 column grid layout with text inputs for the first and last names -->
       <div class="mb-4">
         <label class="form-label" for="reqName">Requester's name</label>
         <input
