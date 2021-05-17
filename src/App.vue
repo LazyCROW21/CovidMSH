@@ -27,6 +27,9 @@ export default {
       }
     },
   },
+  created() {
+    setTimeout(this.checkRoute, 100);
+  }
 };
 </script>
 
