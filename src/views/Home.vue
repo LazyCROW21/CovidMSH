@@ -187,9 +187,7 @@ export default {
     },
     removePerson(id) {
       if (confirm("Are you sure you want to remove this person?")) {
-        this.people = this.people.filter((person) => {
-          person.id !== id;
-        });
+        this.people = this.people.filter((person) => person.id !== id);
       }
     },
     submitReq(e) {
