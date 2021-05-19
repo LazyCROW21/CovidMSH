@@ -17,9 +17,9 @@ export default {
   },
   methods: {
     checkRoute() {
-      console.log(this.$router.currentRoute._rawValue);
+      // console.log(this.$router.currentRoute._rawValue);
       let path = this.$router.currentRoute._rawValue.fullPath;
-      console.log(path);
+      // console.log(path);
       if (path) {
         if (path.includes("/admin")) {
           this.admin = true;
@@ -29,7 +29,7 @@ export default {
   },
   created() {
     setTimeout(this.checkRoute, 100);
-  }
+  },
 };
 </script>
 
