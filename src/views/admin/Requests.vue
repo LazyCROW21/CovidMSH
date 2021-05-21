@@ -35,35 +35,51 @@
         role="tabpanel"
         aria-labelledby="nav-new-req-tab"
       >
-        <table class="table table-hover table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Person</th>
-              <th>Requirements</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="request in requests" :key="request._id">
-              <td>{{ msg.id }}</td>
-              <td>{{ msg.subject }}</td>
-              <td>{{ msg.date }}</td>
-              <td>
-                <div class="btn-group" role="group" aria-label="action btns">
-                  <button type="button" class="btn btn-primary me-2">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger ms-2">
-                    <i class="fas fa-minus-circle"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Person</th>
+                <th>Requirements</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(request, index) in requests.filter(
+                  (reqst) => reqst.completed === false
+                )"
+                :key="request._id"
+              >
+                <td>{{ index+1 }}</td>
+                <td>{{ request.reqName }}</td>
+                <td>{{ request.reqPhone }}</td>
+                <td>{{ request.personCnt }}</td>
+                <td>
+                  <span v-for="people in request.people" :key="people.id">
+                    {{ people.requirement }},
+                  </span>
+                </td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="action btns">
+                    <button type="button" class="btn btn-primary me-2">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mx-2">
+                      <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger ms-2">
+                      <i class="fas fa-minus-circle"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div
         class="tab-pane fade"
@@ -71,33 +87,51 @@
         role="tabpanel"
         aria-labelledby="nav-completed-req-tab"
       >
-        <table class="table table-hover table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th>#</th>
-              <th>subject</th>
-              <th>date</th>
-              <th>action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="msg in msgs" :key="msg.id">
-              <td>{{ msg.id }}</td>
-              <td>{{ msg.subject }}</td>
-              <td>{{ msg.date }}</td>
-              <td>
-                <div class="btn-group" role="group" aria-label="action btns">
-                  <button type="button" class="btn btn-primary me-2">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger ms-2">
-                    <i class="fas fa-minus-circle"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Person</th>
+                <th>Requirements</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(request, index) in requests.filter(
+                  (reqst) => reqst.completed === true
+                )"
+                :key="request._id"
+              >
+                <td>{{ index+1 }}</td>
+                <td>{{ request.requesterName }}</td>
+                <td>{{ request.requesterPhone }}</td>
+                <td>{{ request.personCnt }}</td>
+                <td>
+                  <span v-for="people in request.people" :key="people.id">
+                    {{ people.requirement }},
+                  </span>
+                </td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="action btns">
+                    <button type="button" class="btn btn-primary me-2">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mx-2">
+                      <i class="fas fa-check-circle"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger ms-2">
+                      <i class="fas fa-minus-circle"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -110,6 +144,8 @@ export default {
     return {
       requests: [],
     };
+  },
+  methods: {
   },
   async created() {
     try {

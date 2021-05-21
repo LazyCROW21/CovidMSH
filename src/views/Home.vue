@@ -166,6 +166,7 @@
 <script>
 // @ is an alias to /src
 import Person from "@/components/Person.vue";
+import APIService from "../APIService";
 
 export default {
   name: "Home",
@@ -190,19 +191,25 @@ export default {
         this.people = this.people.filter((person) => person.id !== id);
       }
     },
-    submitReq(e) {
+    async submitReq(e) {
       e.preventDefault();
       var data = {
-        requesterName: this.reqName,
-        requesterPhone: this.reqPhone,
-        requesterEmail: this.reqEmail,
-        requesterPINCODE: this.reqPINCODE,
-        requesterAddress: this.reqAddress,
-        requesterAdditionalInfo: this.reqAdditionalInfo,
+        requesterName: reqName,
+        requesterPhone: reqPhone,
+        requesterEmail: reqEmail,
+        requesterPINCODE: reqPINCODE,
+        requesterAddress: reqAddress,
+        requesterAdditionalInfo: reqAdditionalInfo,
         personCount: this.personCnt,
         people: this.people,
       };
-      console.log(JSON.stringify(data));
+      try {
+        var resp = await APIService.addRequest(data);
+        alert("Request Submitted!");
+      } catch (err) {
+        console.error(err);
+        console.error(err.message);
+      }
     },
   },
   data() {
@@ -213,7 +220,7 @@ export default {
       reqPINCODE: null,
       reqAddress: "",
       reqAdditionalInfo: "",
-      personCnt: null,
+      personCnt: 0,
       addperson: {
         id: 0,
         name: "",

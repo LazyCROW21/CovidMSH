@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark text-light p-2">
+  <div class="bg-dark text-light p-2" id="topbar">
     <h2 class="m-0">
       <i class="fas fa-bars p-1" :id="'togglebtn'" @click="SideNavOpen"></i>
       <span class="ms-3">Admin Panel</span>
@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style scoped>
+#topbar{
+  box-sizing: border-box;
+}
 #sidenav {
   position: fixed;
   top: 0;
