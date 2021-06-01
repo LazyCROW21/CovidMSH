@@ -1,11 +1,12 @@
 <template>
   <h2 class="m-3">Information</h2>
+  <p class="ms-3">All the important information will be shared here, please check this page regularly.</p>
   <hr />
   <div class="p-3">
     <div class="accordion" id="infoAccordPanel">
       <Article
         v-for="article in articles"
-        :key="article.id"
+        :key="article._id"
         :article="article"
       />
     </div>
@@ -14,6 +15,7 @@
 
 <script>
 import Article from "@/components/Article.vue";
+import APIService from "../APIService";
 
 export default {
   name: "Information",
@@ -25,16 +27,9 @@ export default {
       articles: [],
     };
   },
-  created() {
-    this.articles = [
-      {
-        id: 1,
-        date: "10 Mar, 2021",
-        title: "Article 1001",
-        body:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae dolorum praesentium quam voluptatem, ab omnis, dolorem, perspiciatis amet dolores error assumenda cumque perferendis cupiditate nulla tempore esse sequi quaerat. Maiores.",
-      },
-    ];
+  async created() {
+    var resp = await APIService.getArticles();
+    this.articles = resp;
   },
 };
 </script>
