@@ -65,12 +65,13 @@ router.get("/getarticles", async (req, res) => {
 // add articles
 router.post("/addarticle", async (req, res) => {
   const articles = await loadArticleCollection();
-  articles.insertOne({
+  var result = await articles.insertOne({
     title: req.body.title,
     body: req.body.body,
     createdAt: new Date()
   });
-  res.status(201).send({status: "inserted"});
+  // console.log(idk.ops[0]._id);
+  res.status(201).send({status: "inserted", insertID: result.ops[0]._id});
 });
 
 // update articles

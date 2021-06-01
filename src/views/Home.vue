@@ -194,13 +194,13 @@ export default {
     async submitReq(e) {
       e.preventDefault();
       var data = {
-        requesterName: reqName,
-        requesterPhone: reqPhone,
-        requesterEmail: reqEmail,
-        requesterPINCODE: reqPINCODE,
-        requesterAddress: reqAddress,
-        requesterAdditionalInfo: reqAdditionalInfo,
-        personCount: this.personCnt,
+        reqName: this.reqName,
+        reqPhone: this.reqPhone,
+        reqEmail: this.reqEmail,
+        reqPINCODE: this.reqPINCODE,
+        reqAddress: this.reqAddress,
+        reqAdditionalInfo: this.reqAdditionalInfo,
+        personCnt: this.personCnt,
         people: this.people,
       };
       try {
@@ -234,17 +234,7 @@ export default {
     };
   },
   created() {
-    this.people = [
-      // {
-      //   id: 1,
-      //   name: "Hardik Rajeshkumar Kardam",
-      //   age: 20,
-      //   vaccinated: true,
-      //   condition: 'Negative',
-      //   hospitalisation: true,
-      //   requirement: "Oxygen",
-      // },
-    ];
+    this.people = [];
   },
 };
 </script>

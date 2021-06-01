@@ -44,7 +44,7 @@
                 <th>Phone</th>
                 <th>Person</th>
                 <th>Requirements</th>
-                <th>Action</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@
                 )"
                 :key="request._id"
               >
-                <td>{{ index+1 }}</td>
+                <td>{{ index + 1 }}</td>
                 <td>{{ request.reqName }}</td>
                 <td>{{ request.reqPhone }}</td>
                 <td>{{ request.personCnt }}</td>
@@ -63,15 +63,15 @@
                     {{ people.requirement }},
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="btn-group" role="group" aria-label="action btns">
-                    <button type="button" class="btn btn-primary me-2">
+                    <button type="button" class="btn btn-sm btn-primary me-2">
                       <i class="fas fa-eye"></i>
                     </button>
-                    <button type="button" class="btn btn-danger mx-2">
+                    <button type="button" class="btn btn-sm btn-danger mx-2">
                       <i class="fas fa-check-circle"></i>
                     </button>
-                    <button type="button" class="btn btn-danger ms-2">
+                    <button type="button" class="btn btn-sm btn-danger ms-2">
                       <i class="fas fa-minus-circle"></i>
                     </button>
                   </div>
@@ -96,7 +96,7 @@
                 <th>Phone</th>
                 <th>Person</th>
                 <th>Requirements</th>
-                <th>Action</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -106,7 +106,7 @@
                 )"
                 :key="request._id"
               >
-                <td>{{ index+1 }}</td>
+                <td>{{ index + 1 }}</td>
                 <td>{{ request.requesterName }}</td>
                 <td>{{ request.requesterPhone }}</td>
                 <td>{{ request.personCnt }}</td>
@@ -115,15 +115,12 @@
                     {{ people.requirement }},
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="btn-group" role="group" aria-label="action btns">
-                    <button type="button" class="btn btn-primary me-2">
+                    <button type="button" class="btn btn-sm btn-primary me-2">
                       <i class="fas fa-eye"></i>
                     </button>
-                    <button type="button" class="btn btn-danger mx-2">
-                      <i class="fas fa-check-circle"></i>
-                    </button>
-                    <button type="button" class="btn btn-danger ms-2">
+                    <button type="button" class="btn btn-sm btn-danger ms-2">
                       <i class="fas fa-minus-circle"></i>
                     </button>
                   </div>
@@ -145,8 +142,7 @@ export default {
       requests: [],
     };
   },
-  methods: {
-  },
+  methods: {},
   async created() {
     try {
       this.requests = await APIService.getRequests();

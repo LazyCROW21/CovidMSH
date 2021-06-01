@@ -27,6 +27,30 @@ class APIService {
     return axios.delete(url + `/deleterequest/${id}`);
   }
 
+  static getArticles() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get(url + "/getarticles");
+        const data = res.data;
+        resolve(data);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  static addArticle(data) {
+    return axios.post(url + `/addarticle`, data);
+  }
+
+  static editArticle(id, data) {
+    return axios.put(url + `/updatearticle/${id}`, data);
+  }
+
+  static deleteArticle(id) {
+    return axios.delete(url + `/deletearticle/${id}`);
+  }
+
   static getMessages() {
     return new Promise(async (resolve, reject) => {
       try {
