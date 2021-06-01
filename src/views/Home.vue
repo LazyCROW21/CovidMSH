@@ -150,6 +150,7 @@
             @removerPerson="removePerson"
             v-for="person in people"
             :key="person.id"
+            :delbtn="true"
             :person="person"
           />
         </div>

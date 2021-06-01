@@ -14,6 +14,13 @@ router.get("/getrequests", async (req, res) => {
   res.send(await requests.find({}).toArray());
 });
 
+// sets the request completed flag to true
+router.put("/requestcompleted/:id", async (req, res) => {
+  const requests = await loadRequestCollection();
+  await requests.updateOne({_id: new mongodb.ObjectID(req.params.id)}, { $set: {completed: true} });
+  res.status(200).send({status: "updated"});
+});
+
 // add request
 router.post("/addrequest", async (req, res) => {
   const requests = await loadRequestCollection();

@@ -23,6 +23,10 @@ class APIService {
     return axios.post(url + "/addrequest", data);
   }
 
+  static markComplete(id) {
+    return axios.put(url + `/requestcompleted/${id}`);
+  }
+
   static deleteRequest(id) {
     return axios.delete(url + `/deleterequest/${id}`);
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="position-relative">
-    <span class="close" @click="removeP(person.id)">&times;</span>
+    <span v-if="delbtn" class="close" @click="removeP(person.id)">&times;</span>
     <div class="row border-top">
       <div class="col-5">
         <strong>Name</strong>
@@ -51,6 +51,7 @@
 export default {
   name: "Person",
   props: {
+    delbtn: Boolean,
     person: Object,
   },
   methods: {
