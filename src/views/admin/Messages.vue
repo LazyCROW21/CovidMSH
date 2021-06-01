@@ -96,7 +96,7 @@
             </tr>
           </table>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button
             type="button"
             class="btn btn-secondary"
@@ -105,7 +105,7 @@
             Close
           </button>
           <button type="button" class="btn btn-primary">Mark Read</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -154,7 +154,6 @@ export default {
     },
     formatDate(date) {
       var realdate = new Date(date);
-      // console.log(realdate);
       var formattedDate = "";
       formattedDate += realdate.getDay() + "/";
       formattedDate += realdate.getMonth() + "/";
@@ -165,7 +164,6 @@ export default {
   async created() {
     try {
       this.msgs = await APIService.getMessages();
-      console.log(this.msgs);
     } catch (err) {
       console.error(err);
       console.error(err.message);
