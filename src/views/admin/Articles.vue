@@ -180,8 +180,7 @@ export default {
       this.addArticle.title = "";
       this.addArticle.body = "";
       data._id = resp.insertID;
-      this.articles = [...this.articles, data]
-      console.log(data);
+      this.articles = [...this.articles, data];
     },
     async editArticle() {
       var data = {
@@ -226,7 +225,6 @@ export default {
     },
     formatDate(date) {
       var realdate = new Date(date);
-      // console.log(realdate);
       var formattedDate = "";
       formattedDate += realdate.getDay() + "/";
       formattedDate += realdate.getMonth() + "/";
@@ -238,7 +236,6 @@ export default {
     try {
       var resp = await APIService.getArticles();
       this.articles = resp;
-      console.log(resp);
     } catch (err) {
       console.error(err);
       console.error(err.message);

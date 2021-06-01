@@ -176,7 +176,7 @@
             <div class="col-12 col-md-6">{{ this.requestModal.requesterAddress }}</div>
             <div class="col-12 col-md-6 fw-bold">Other Information</div>
             <div class="col-12 col-md-6">{{ this.requestModal.requesterAdditionalInfo }}</div>
-            <div class="col-12 bg-info rounded">
+            <div class="col-12 bg-info text-white rounded">
               <h6 class="text-white mt-2 mb-0">People List</h6>
               <hr class="text-white my-1" />
               <Person
