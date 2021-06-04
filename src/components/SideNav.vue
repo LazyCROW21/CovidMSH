@@ -1,6 +1,6 @@
 <template>
   <div class="bg-dark text-light p-2" id="topbar">
-    <h2 class="m-0">
+    <h2 class="m-0" v-if="login">
       <i class="fas fa-bars p-1" :id="'togglebtn'" @click="SideNavOpen"></i>
       <span class="ms-3">Admin Panel</span>
     </h2>
@@ -19,24 +19,31 @@
         <router-link to="/admin/requests" class="nav-link">Request</router-link>
       </li>
       <li class="nav-item py-1 px-2 rounded">
-        <router-link to="/admin/articles" class="nav-link">Articles</router-link>
+        <router-link to="/admin/articles" class="nav-link"
+          >Articles</router-link
+        >
       </li>
       <li class="nav-item py-1 px-2 rounded">
-        <router-link to="/admin/messages" class="nav-link">Messages</router-link>
+        <router-link to="/admin/messages" class="nav-link"
+          >Messages</router-link
+        >
       </li>
       <hr />
       <li class="nav-item py-1 px-2 rounded">
-        <button to="/" class="nav-link btn">Log out</button>
+        <button @click="logOut" class="nav-link btn">Log out</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import APIService from "../APIService";
+
 export default {
   name: "SideNav",
   data() {
     return {
+      login: false,
       sideBar: "hidenav",
     };
   },
@@ -47,12 +54,37 @@ export default {
     SideNavClose() {
       this.sideBar = "hidenav";
     },
+    async logOut() {
+      try {
+        var resp = await APIService.logout();
+        var result = resp.data;
+        if (result.logout == "success") {
+          console.log("Logged Out!");
+          this.$router.push({ name: "Admin Login" });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+  async created() {
+    if (this.$route.name != "Admin Login") {
+      try {
+        var resp = await APIService.checkLogin();
+        if (resp.login == "success") {
+          this.login = true;
+        }
+      } catch (e) {
+        console.error(e);
+        this.login = false;
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
-#topbar{
+#topbar {
   box-sizing: border-box;
 }
 #sidenav {
@@ -89,7 +121,7 @@ export default {
   cursor: pointer;
   background: #444;
 }
-#togglebtnnav:hover{
+#togglebtnnav:hover {
   cursor: pointer;
   background: #999;
 }

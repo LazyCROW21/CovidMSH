@@ -8,6 +8,25 @@ const router = express.Router();
 ***************************************************        Request APIs           *****************************************************
 ***************************************************************************************************************************************
 */
+
+// meta data
+router.get("/getmetadata", async (req, res) => {
+  const requests = await loadRequestCollection();
+  var newreq = await requests.countDocuments({completed: false});
+  var compreq = await requests.countDocuments({completed: true});
+  const articles = await loadArticleCollection();
+  var totalarticle = await articles.countDocuments();
+  const messages = await loadMessageCollection();
+  var newmsg = await messages.countDocuments({read: false});
+  console.log(newreq, compreq, totalarticle, newmsg);
+  res.send({
+    newrequest: newreq,
+    completedrequest: compreq,
+    totalarticles: totalarticle,
+    newmessages: newmsg
+  });
+});
+
 // get all requests
 router.get("/getrequests", async (req, res) => {
   const requests = await loadRequestCollection();
@@ -126,6 +145,7 @@ router.post("/addmessage", async (req, res) => {
     phone: req.body.phone,
     subject: req.body.subject,
     message: req.body.message,
+    read: false,
     createdAt: new Date()
   });
   res.status(201).send({status: "inserted"});

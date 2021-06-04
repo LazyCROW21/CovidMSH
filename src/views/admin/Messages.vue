@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <div class="table-responsive">
-      <table class="table table-hover table-striped table-bordered">
+      <table class="table table-hover table-bordered">
         <colgroup>
           <col span="1" style="width: 10%" />
           <col span="1" style="width: 65%" />
@@ -18,7 +18,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(msg, index) in msgs" :key="msg.id">
+          <tr
+            v-for="(msg, index) in msgs"
+            :key="msg.id"
+            :class="msgReadBG(msg.read)"
+          >
             <td>{{ index + 1 }}</td>
             <td>{{ msg.name }}</td>
             <td>{{ msg.subject }}</td>
@@ -60,7 +64,9 @@
     aria-hidden="true"
   >
     <div
-      class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-md-down"
+      class="
+        modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-md-down
+      "
     >
       <div class="modal-content">
         <div class="modal-header">
@@ -96,7 +102,7 @@
             </tr>
           </table>
         </div>
-        <!-- <div class="modal-footer">
+        <div class="modal-footer">
           <button
             type="button"
             class="btn btn-secondary"
@@ -105,7 +111,7 @@
             Close
           </button>
           <button type="button" class="btn btn-primary">Mark Read</button>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -140,7 +146,7 @@ export default {
       msgModal.show();
     },
     async delMsg(msg) {
-      if(!confirm("Are you sure you want to delete this message!")) {
+      if (!confirm("Are you sure you want to delete this message!")) {
         return null;
       }
       try {
@@ -160,6 +166,23 @@ export default {
       formattedDate += realdate.getFullYear();
       return formattedDate;
     },
+    msgReadBG(inp) {
+      if (inp) {
+        return "bg-white text-primary";
+      } else {
+        return "bg-light text-muted";
+      }
+    },
+  },
+  async beforeCreate() {
+    if (this.$route.name != "Admin Login") {
+      try {
+        var resp = await APIService.checkLogin();
+      } catch (e) {
+        console.error(e);
+        this.$router.push({ name: "Admin Login" });
+      }
+    }
   },
   async created() {
     try {

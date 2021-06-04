@@ -114,11 +114,22 @@
     aria-hidden="true"
   >
     <div
-      class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg modal-fullscreen-md-down"
+      class="
+        modal-dialog
+        modal-dialog-scrollable
+        modal-dialog-centered
+        modal-lg
+        modal-fullscreen-md-down
+      "
     >
       <div class="modal-content">
         <div class="modal-header">
-          <input class="form-control modal-title" type="text" v-model="ArticleModalTitle" id="articleModalLabel">
+          <input
+            class="form-control modal-title"
+            type="text"
+            v-model="ArticleModalTitle"
+            id="articleModalLabel"
+          />
           <button
             type="button"
             class="btn-close"
@@ -127,9 +138,15 @@
           ></button>
         </div>
         <div class="modal-body">
-          <span class="bg-primary text-white p-1 rounded">Date: {{ this.ArticleModalDate }}</span>
+          <span class="bg-primary text-white p-1 rounded"
+            >Date: {{ this.ArticleModalDate }}</span
+          >
           <hr />
-          <textarea v-model="ArticleModalBody" rows="6" class="form-control"></textarea>
+          <textarea
+            v-model="ArticleModalBody"
+            rows="6"
+            class="form-control"
+          ></textarea>
         </div>
         <div class="modal-footer">
           <button
@@ -139,11 +156,7 @@
           >
             Close
           </button>
-          <button
-            type="button"
-            @click="editArticle()"
-            class="btn btn-primary"
-          >
+          <button type="button" @click="editArticle()" class="btn btn-primary">
             Save
           </button>
         </div>
@@ -173,7 +186,7 @@ export default {
       e.preventDefault();
       var data = {
         title: this.addArticle.title,
-        body: this.addArticle.body
+        body: this.addArticle.body,
       };
       var resp = await APIService.addArticle(data);
       alert("Article Added!");
@@ -185,19 +198,19 @@ export default {
     async editArticle() {
       var data = {
         title: this.ArticleModalTitle,
-        body: this.ArticleModalBody
+        body: this.ArticleModalBody,
       };
       var resp = await APIService.editArticle(this.ArticleModalId, data);
       alert("Article Updated!");
       this.articles = this.articles.map((ele) => {
-        if(ele._id == this.ArticleModalId) {
+        if (ele._id == this.ArticleModalId) {
           ele.title = this.ArticleModalTitle;
           ele.body = this.ArticleModalBody;
           return ele;
         } else {
           return ele;
         }
-      })
+      });
     },
     async delArticle(article) {
       if (!confirm("Are you sure you want to delete this article!")) {
@@ -231,6 +244,16 @@ export default {
       formattedDate += realdate.getFullYear();
       return formattedDate;
     },
+  },
+  async beforeCreate() {
+    if (this.$route.name != "Admin Login") {
+      try {
+        var resp = await APIService.checkLogin();
+      } catch (e) {
+        console.error(e);
+        this.$router.push({ name: "Admin Login" });
+      }
+    }
   },
   async created() {
     try {

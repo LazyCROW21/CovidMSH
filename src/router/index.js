@@ -6,10 +6,12 @@ import ContactUs from "../views/ContactUs.vue";
 import NotFound from "../views/NotFound.vue";
 
 // Admin Routes
+import Login from "../views/admin/Login";
 import Dashboard from "../views/admin/Dashboard";
 import Requests from "../views/admin/Requests";
 import Articles from "../views/admin/Articles";
 import Messages from "../views/admin/Messages";
+
 
 const routes = [
   {
@@ -31,6 +33,11 @@ const routes = [
     path: "/about",
     name: "About",
     component: About,
+  },
+  {
+    path: "/admin/login",
+    name: "Admin Login",
+    component: Login,
   },
   {
     path: "/admin",
@@ -66,7 +73,7 @@ const router = createRouter({
 });
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   document.title = "CovidMSH - " + to.name;
   next();
 })
