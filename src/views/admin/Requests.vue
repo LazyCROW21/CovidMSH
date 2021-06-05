@@ -319,8 +319,12 @@ export default {
     },
   },
   async beforeCreate() {
-    var resp = await APIService.checkLogin();
-    if (resp.status != "loggedin") {
+    try {
+      var resp = await APIService.checkLogin();
+      if (resp.status != "loggedin") {
+        this.$router.push({ name: "Admin Login" });
+      }
+    } catch (err) {
       this.$router.push({ name: "Admin Login" });
     }
   },

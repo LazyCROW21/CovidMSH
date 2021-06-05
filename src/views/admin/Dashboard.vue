@@ -35,8 +35,12 @@ export default {
     return { newreq: 0, compreq: 0, ttlart: 0, ttlreq: 0, newmsg: 0 };
   },
   async beforeCreate() {
-    var resp = await APIService.checkLogin();
-    if (resp.status != "loggedin") {
+    try {
+      var resp = await APIService.checkLogin();
+      if (resp.status != "loggedin") {
+        this.$router.push({ name: "Admin Login" });
+      }
+    } catch (err) {
       this.$router.push({ name: "Admin Login" });
     }
   },

@@ -33,7 +33,7 @@ class APIService {
   }
 
   static logout() {
-    return axios.delete(loginurl + "/logout");
+    return axios.post(loginurl + "/logout");
   }
 
   static getMetaData() {
