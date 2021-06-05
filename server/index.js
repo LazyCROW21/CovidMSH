@@ -4,7 +4,6 @@ const cors = require("cors");
 const jwt = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
 const bcrypt = require('bcrypt');
-// const session = require("express-session");
 
 const JWTSECRET = "JWTSECRET";
 
