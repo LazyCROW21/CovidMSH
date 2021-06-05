@@ -1,12 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const passport = require("passport");
-const flash = require("express-flash");
-const session = require("express-session");
+const jwt = require('jsonwebtoken');
+const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
+// const session = require("express-session");
 
-const initializePassport = require("./passport-config");
-initializePassport(passport);
+const JWTSECRET = "JWTSECRET";
+
+const users = [
+  {
+    username: "Admin", //pwd: Admin
+    password: "$2b$08$I4NM/x8k0IGL3hR6e/0B2.l4ASs.nvHN4RDS86IhzSgIp2IfLlOnK",
+  },
+];
 
 const app = express();
 app.use(
@@ -15,58 +22,58 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(cors());
-app.use(flash());
-app.use(
-  session({
-    secret: "FULLYSECURED",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:8080']
+}));
+
+app.post('/login', async (req, res) => {
+  const user = users.find((user) => user.username === req.body.username);
+  if(user == null) {
+    return res.send({login: "fail"});
+  }
+  try {
+    if(bcrypt.compareSync(req.body.password, user.password)) {
+      const token = jwt.sign({
+        username: users[0].username
+      }, JWTSECRET);
+      res.cookie('jwt', token, {
+        httpOnly: true,
+        maxAge: 86400000
+      });
+      return res.send({login: "success"});
+    } else {
+      return res.send({login: "fail"});
+    }
+  } catch (e) {
+    return res.send({login: "fail"});
+  }
+});
+
+app.get('/logincheck', (req, res) => {
+  const token = req.cookies['jwt'];
+  if(token) {
+    const claim = jwt.verify(token, JWTSECRET);
+    if(!claim) {
+      return res.status(401).send({status: "loggedout"});
+    }
+    res.status(201).send({status: "loggedin"});
+  } else {
+    return res.status(401).send({status: "loggedout"});
+  }
+});
+
+app.post('/logout', (req, res) => {
+  res.cookie('jwt', '', {
+    maxAge: 0
+  });
+  res.send({logout: "success"});
+});
 
 const api = require("./routes/api");
-app.use("/api", checkAuthenticated, api);
-
-// Login and Auth
-app.post(
-  "/login",
-  checkNotAuth,
-  passport.authenticate("local", {
-    successRedirect: "/loginsuccess",
-    failureRedirect: "/loginfailed",
-    failureFlash: true,
-  })
-);
-
-app.delete('/logout', (req, res) => {
-  req.logOut();
-  res.status(201).send({logout: "success"});
-});
-
-app.get("/loginsuccess", checkAuthenticated, (req, res) => {
-  res.status(201).send({ login: "success" });
-});
-
-app.get("/loginfailed", checkNotAuth, (req, res) => {
-  res.status(201).send({ login: "fail" });
-});
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.status(403).send({ error: "403" });
-}
-
-function checkNotAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.status(201).send({ status: "Already logged in" });
-  }
-  next();
-}
+// const { json } = require("body-parser");
+app.use("/api", api);
 
 const port = process.env.PORT || 5000;
 

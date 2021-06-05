@@ -1,22 +1,15 @@
 import axios from "axios";
-import { Cookie } from "express-session";
 
 const url = "http://localhost:5000/api";
 const loginurl = "http://localhost:5000";
 
+axios.defaults.withCredentials = true;
+
 class APIService {
   static async login(username, password) {
-    const params = new URLSearchParams();
-    params.append("username", username);
-    params.append("password", password);
-
-    const config = {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      }
-    };
+    var data = {username: username, password: password};
     var result;
-    await axios.post(loginurl + "/login", params, config)
+    await axios.post(loginurl + "/login", data)
     .then((response) => {
       console.log(response);
       result = response.data;
@@ -24,19 +17,13 @@ class APIService {
       console.log(error);
       result = {login: "fail"};
     });
-    // const cookie = resp.headers["set-cookie"];
-    // console.log(cookie);
-    // console.log(resp);
-    // // console.log(resp.headers);
-    // // const cookie = resp.headers["set-cookie"][0];
-    // // axios.defaults.headers.Cookie = cookie;
     return result;
   }
 
   static checkLogin() {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(loginurl + "/loginsuccess");
+        const res = await axios.get(loginurl + "/logincheck");
         const data = res.data;
         resolve(data);
       } catch (err) {

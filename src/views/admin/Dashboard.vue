@@ -35,13 +35,9 @@ export default {
     return { newreq: 0, compreq: 0, ttlart: 0, ttlreq: 0, newmsg: 0 };
   },
   async beforeCreate() {
-    if(this.$route.name != "Admin Login") {
-      try {
-        var resp = await APIService.checkLogin();
-      } catch (e) {
-        console.error(e);
-        this.$router.push({ name: "Admin Login"});
-      }
+    var resp = await APIService.checkLogin();
+    if (resp.status != "loggedin") {
+      this.$router.push({ name: "Admin Login" });
     }
   },
   async created() {

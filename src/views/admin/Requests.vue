@@ -319,13 +319,9 @@ export default {
     },
   },
   async beforeCreate() {
-    if (this.$route.name != "Admin Login") {
-      try {
-        var resp = await APIService.checkLogin();
-      } catch (e) {
-        console.error(e);
-        this.$router.push({ name: "Admin Login" });
-      }
+    var resp = await APIService.checkLogin();
+    if (resp.status != "loggedin") {
+      this.$router.push({ name: "Admin Login" });
     }
   },
   async created() {

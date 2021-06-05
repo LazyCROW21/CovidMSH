@@ -71,7 +71,7 @@ export default {
     if (this.$route.name != "Admin Login") {
       try {
         var resp = await APIService.checkLogin();
-        if (resp.login == "success") {
+        if (resp.status == "loggedin") {
           this.login = true;
         }
       } catch (e) {

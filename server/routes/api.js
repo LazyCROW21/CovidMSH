@@ -18,7 +18,6 @@ router.get("/getmetadata", async (req, res) => {
   var totalarticle = await articles.countDocuments();
   const messages = await loadMessageCollection();
   var newmsg = await messages.countDocuments({read: false});
-  console.log(newreq, compreq, totalarticle, newmsg);
   res.send({
     newrequest: newreq,
     completedrequest: compreq,
